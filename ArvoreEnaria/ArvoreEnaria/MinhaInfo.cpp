@@ -2,11 +2,9 @@
 #include "MinhaInfo.h"
 
 
-MinhaInfo::MinhaInfo()
-{
+MinhaInfo::MinhaInfo(int vlr) {
+	this->valor = vlr;
 }
-
-
-MinhaInfo::~MinhaInfo()
-{
+ostream& MinhaInfo::print(ostream& os)const throw()  {
+	return os << this->valor;
 }

@@ -4,17 +4,23 @@
 #define ARVOREENARIA_H_INCLUDED
 #include "NoArvoreEnaria.h"
 #include "InfoArvoreEnaria.h"
-#include <stdio.h>
+#include <iostream>
+using namespace std;
 class ArvoreEnaria
 {
 public:
 	ArvoreEnaria(unsigned int);
 	~ArvoreEnaria();
-	void inserir(InfoArvoreEnaria) throw(char*);
-	ostream& operator<< (ostream&) throw();
-
+	void inserir(InfoArvoreEnaria*) throw(char*);
+	void remover(InfoArvoreEnaria*) throw(char*);
+	//virtual ostream& print(ostream&, const ArvoreEnaria) = 0;
+	friend ostream& operator<< (ostream&, const ArvoreEnaria&) throw();
+	NoArvoreEnaria getRaiz() const throw(char*);
+	
 private:
 	NoArvoreEnaria * raiz;
+	int numInfo;
 	
 };
+
 #endif
