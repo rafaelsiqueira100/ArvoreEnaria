@@ -12,16 +12,20 @@ NoArvoreEnaria::NoArvoreEnaria(unsigned int numInfos)
 	this->vetPtrNo = new NoArvoreEnaria*[numInfos + 1];
 
 }
-NoArvoreEnaria::NoArvoreEnaria(NoArvoreEnaria noBase)throw(char*)
+NoArvoreEnaria::NoArvoreEnaria(const NoArvoreEnaria& noBase)throw(char*)
 {
-	if(noBase.getNumInfos==0)
+	if(noBase.getNumInfos()==0)
 		throw("Número de Informações do Objeto Base inválido!");
 	this->numInfos = noBase.numInfos;
 	this->vetPtrInfo = new InfoArvoreEnaria*[numInfos];
 	this->vetPtrNo = new NoArvoreEnaria*[numInfos+1];
-	for (int i = 0; i < numInfos; i++) {
-
+	int i;
+	for (i = 0; i < numInfos; i++) {
+		**(this->vetPtrInfo + i) = *(noBase.getPtrInfo(i));
+		**(this->vetPtrNo + i) = *(noBase.getPtrNoFilho(i));
 	}
+	**(this->vetPtrNo + numInfos) = *(noBase.getPtrNoFilho(i));
+
 }
 
 NoArvoreEnaria::~NoArvoreEnaria()
@@ -39,7 +43,7 @@ ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 		}
 		os << no.getPtrInfo(indicePtr);
 	}
-
+	return os;
 }
 NoArvoreEnaria* NoArvoreEnaria::getPtrNoFilho(unsigned int indFilho) const throw() {
 
@@ -74,7 +78,7 @@ char NoArvoreEnaria::isCheio() const throw() {
 	return 1;
 }
 char NoArvoreEnaria::haInfo(InfoArvoreEnaria* info)const throw() {
-	NoArvoreEnaria noRel(this);
+	NoArvoreEnaria noRel(*this);
 	while (1) {
 		for (int i = 0; i < numInfos; i++) {
 			if ((*vetPtrInfo + i) != nullptr) {

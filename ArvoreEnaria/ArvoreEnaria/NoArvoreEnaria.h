@@ -11,7 +11,7 @@ class NoArvoreEnaria
 public:
 	NoArvoreEnaria(unsigned int)throw(char*);
 	~NoArvoreEnaria();
-	NoArvoreEnaria(NoArvoreEnaria) throw(char*);
+	NoArvoreEnaria(const NoArvoreEnaria&) throw(char*);
 	friend ostream& operator<< (ostream&, const NoArvoreEnaria&) throw();
 	NoArvoreEnaria* getPtrNoFilho(unsigned int) const throw();
 	InfoArvoreEnaria* getPtrInfo(unsigned int) const throw();

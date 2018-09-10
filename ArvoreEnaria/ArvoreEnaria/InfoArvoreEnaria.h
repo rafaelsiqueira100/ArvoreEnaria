@@ -8,9 +8,14 @@ class InfoArvoreEnaria
 public:
 	InfoArvoreEnaria();
 	~InfoArvoreEnaria();
-	InfoArvoreEnaria getInfo() throw();
 	friend ostream& operator<< (ostream&, const InfoArvoreEnaria&) throw();
-	virtual ostream& print(ostream&)const = 0 ;
+	virtual char operator<(const InfoArvoreEnaria&)const throw() = 0;
+	virtual char operator>(const InfoArvoreEnaria&)const throw() = 0;
+	virtual char operator==(const InfoArvoreEnaria&)const throw() = 0;
+	virtual char operator<=(const InfoArvoreEnaria&)const throw() = 0;
+	virtual char operator>=(const InfoArvoreEnaria&)const throw() = 0;
+
+	virtual ostream& print(ostream&)const throw() = 0 ;
 
 };
 #endif
