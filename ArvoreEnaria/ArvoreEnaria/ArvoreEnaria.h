@@ -11,11 +11,11 @@ class ArvoreEnaria
 public:
 	ArvoreEnaria(unsigned int);
 	~ArvoreEnaria();
-	void inserir(InfoArvoreEnaria*) throw(char*);
-	void remover(InfoArvoreEnaria*) throw(char*);
+	char inserir(InfoArvoreEnaria*) throw(char*);
+	char remover(InfoArvoreEnaria*) throw(char*);
 	//virtual ostream& print(ostream&, const ArvoreEnaria) = 0;
 	friend ostream& operator<< (ostream&, const ArvoreEnaria&) throw();
-	NoArvoreEnaria getRaiz() const throw(char*);
+	NoArvoreEnaria* getRaiz() const throw(char*);
 	
 private:
 	NoArvoreEnaria * raiz;

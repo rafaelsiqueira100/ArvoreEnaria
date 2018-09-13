@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "MinhaInfo.h"
 
 
@@ -11,18 +11,18 @@ ostream& MinhaInfo::print(ostream& os)const throw()  {
 int MinhaInfo::getValor()const throw() {
 	return this->valor;
 }
-char MinhaInfo::operator<(const MinhaInfo& outra)const throw(){
-	return this->valor < outra.getValor();
+char MinhaInfo::operator<(const InfoArvoreEnaria& outra)const throw(){
+	return this->valor <((const MinhaInfo&) outra).getValor();
 }
-char MinhaInfo::operator>(const MinhaInfo& outra)const throw() {
-	return this->valor > outra.getValor();
+char MinhaInfo::operator>(const InfoArvoreEnaria& outra)const throw() {
+	return this->valor > ((const MinhaInfo&)outra).getValor();
 }
-char MinhaInfo::operator==(const MinhaInfo& outra)const throw() {
-	return this->valor == outra.getValor();
+char MinhaInfo::operator==(const InfoArvoreEnaria& outra)const throw() {
+	return this->valor == ((const MinhaInfo&)outra).getValor();
 }
-char MinhaInfo::operator<=(const MinhaInfo& outra)const throw() {
-	return this->valor <= outra.getValor();
+char MinhaInfo::operator<=(const InfoArvoreEnaria& outra)const throw() {
+	return this->valor <= ((const MinhaInfo&)outra).getValor();
 }
-char MinhaInfo::operator>=(const MinhaInfo& outra)const throw() {
-	return this->valor >= outra.getValor();
+char MinhaInfo::operator>=(const InfoArvoreEnaria& outra)const throw() {
+	return this->valor >= ((const MinhaInfo&)outra).getValor();
 }

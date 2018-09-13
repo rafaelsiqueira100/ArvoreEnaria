@@ -16,13 +16,17 @@ public:
 	NoArvoreEnaria* getPtrNoFilho(unsigned int) const throw();
 	InfoArvoreEnaria* getPtrInfo(unsigned int) const throw();
 	int getNumInfos()const throw();
-	char colocarVetorOrdem(InfoArvoreEnaria* info) const throw();
+	char colocarVetorOrdem(InfoArvoreEnaria* info) throw();
+	char removerVetorOrdem(InfoArvoreEnaria* info)throw();
 	char isCheio() const throw();
+	char isVazio() const throw();
 	char haInfo(InfoArvoreEnaria*) const throw();
+	
 private:
 	InfoArvoreEnaria ** vetPtrInfo;
 	NoArvoreEnaria ** vetPtrNo;
 	int numInfos;
+	InfoArvoreEnaria* acharInfoPorLugar(unsigned int) throw(char*);
 };
 
 #endif

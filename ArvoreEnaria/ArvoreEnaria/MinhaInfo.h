@@ -11,11 +11,11 @@ public:
 	MinhaInfo(int);
 	friend ostream& operator<< (ostream&, const MinhaInfo&) throw();
 	int getValor() const throw();
-	char operator<(const MinhaInfo&)const throw() ;
-	char operator>(const MinhaInfo&)const throw() ;
-	char operator==(const MinhaInfo&)const throw();
-	char operator<=(const MinhaInfo&)const throw();
-	char operator>=(const MinhaInfo&)const throw();
+	char operator<(const InfoArvoreEnaria&)const throw() ;
+	char operator>(const InfoArvoreEnaria&)const throw() ;
+	char operator==(const InfoArvoreEnaria&)const throw();
+	char operator<=(const InfoArvoreEnaria&)const throw();
+	char operator>=(const InfoArvoreEnaria&)const throw();
 
 	ostream& print(ostream&) const throw() ;
 private:
