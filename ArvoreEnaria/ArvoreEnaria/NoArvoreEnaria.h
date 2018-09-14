@@ -14,6 +14,7 @@ public:
 	NoArvoreEnaria(const NoArvoreEnaria&) throw(char*);
 	friend ostream& operator<< (ostream&, const NoArvoreEnaria&) throw();
 	NoArvoreEnaria* getPtrNoFilho(unsigned int) const throw();
+	void setPtrNoFilho(NoArvoreEnaria* novoNo, unsigned int indFilho) const throw();
 	InfoArvoreEnaria* getPtrInfo(unsigned int) const throw();
 	int getNumInfos()const throw();
 	char colocarVetorOrdem(InfoArvoreEnaria* info) throw();

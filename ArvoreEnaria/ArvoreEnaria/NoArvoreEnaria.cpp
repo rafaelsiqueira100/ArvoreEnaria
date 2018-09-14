@@ -26,9 +26,14 @@ NoArvoreEnaria::NoArvoreEnaria(const NoArvoreEnaria& noBase)throw(char*)
 	this->vetPtrNo = new NoArvoreEnaria*[numInfos+1];
 	int i;
 	for (i = 0; i < numInfos; i++) {
-		**(this->vetPtrInfo + i) = *(noBase.getPtrInfo(i));
+		if (noBase.getPtrInfo(i) != nullptr)
+			(*(this->vetPtrInfo + i)); //new InfoArvoreEnaria();
+			//**(this->vetPtrInfo + i) = *(noBase.getPtrInfo(i));
+		
+		if (noBase.getPtrNoFilho(i) != nullptr)
 		**(this->vetPtrNo + i) = *(noBase.getPtrNoFilho(i));
 	}
+	if (noBase.getPtrNoFilho(i) != nullptr)
 	**(this->vetPtrNo + numInfos) = *(noBase.getPtrNoFilho(i));
 
 }
@@ -49,12 +54,12 @@ ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 		if (no.getPtrNoFilho(indicePtr) != nullptr) {
 			os <<'(' << *(no.getPtrNoFilho(indicePtr))<<')';
 		}
-		else {
+		else { 
 			os << "(  ||  )";
 		}
 		if (no.getPtrInfo(indicePtr) != nullptr) {
-			
-			os << "  " << *(no.getPtrInfo(indicePtr)) << "  ";
+			InfoArvoreEnaria* info = (no.getPtrInfo(indicePtr));
+			os << "  " <<(*(info)) << "  ";
 		}
 		else {
 			os << "  **  ";
@@ -72,6 +77,12 @@ NoArvoreEnaria* NoArvoreEnaria::getPtrNoFilho(unsigned int indFilho) const throw
 
 	return *(vetPtrNo + indFilho);
 }
+
+void NoArvoreEnaria::setPtrNoFilho(NoArvoreEnaria* novoNo,unsigned int indFilho) const throw() {
+	if (novoNo == nullptr)
+		return;
+	 *(vetPtrNo + indFilho) = new NoArvoreEnaria(*novoNo);
+}
 InfoArvoreEnaria* NoArvoreEnaria::getPtrInfo(unsigned int indInfo) const throw() {
 	return *(vetPtrInfo + indInfo);
 }
@@ -86,11 +97,12 @@ char NoArvoreEnaria::colocarVetorOrdem(InfoArvoreEnaria* info) throw() {
 				for (int j = numInfos - 1; j >= i; j--) {
 					*(this->vetPtrInfo + j + 1) = *(this->vetPtrInfo + j);
 				}
-				*(this->vetPtrInfo + i) = info;
+				**(this->vetPtrInfo + i) = *info;
 			}
 		}
 		else {
-			*(vetPtrInfo + i) = info;
+			*(vetPtrInfo + i) = /*new InfoArvoreEnaria(**/info/*)*/;
+
 			return 1;
 		}
 	}

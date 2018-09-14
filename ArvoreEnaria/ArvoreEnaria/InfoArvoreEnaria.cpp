@@ -11,6 +11,6 @@ InfoArvoreEnaria::~InfoArvoreEnaria()
 {
 }
 
-ostream& operator<< (ostream& os, const InfoArvoreEnaria& info) throw() {
+ostream& operator<< (ostream& os, InfoArvoreEnaria& info) throw() {
 	return((info).print(os));
 }

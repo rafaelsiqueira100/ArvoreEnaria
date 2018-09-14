@@ -39,16 +39,16 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 				}
 				if (*(noAtual)->getPtrInfo(i) > *info) {
 						
-						//deve-se inserir a partir do nó que é apontado pelo ponteiro que está entre i e i-1(ponteiro i-1)
+						//deve-se inserir a partir do nó que é apontado pelo ponteiro que está entre i e i-1(ponteiro i)
 						if ((noAtual)->getPtrNoFilho(i) != nullptr) {
 							noAtual = (noAtual->getPtrNoFilho(i));
 							//volta pra iteração
 						}
 						else {
 							//criar esse nó
-							NoArvoreEnaria* filho = noAtual->getPtrNoFilho(i);
-							filho = new NoArvoreEnaria(this->numInfo);
+							NoArvoreEnaria* filho = new NoArvoreEnaria(this->numInfo);
 							(*filho).colocarVetorOrdem(info);
+							noAtual->setPtrNoFilho(filho, i);
 							return 1;
 						}
 					}
@@ -62,8 +62,13 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 				else {
 					//criar esse nó
 					NoArvoreEnaria* filho = noAtual->getPtrNoFilho(i);
+					
 					filho = new NoArvoreEnaria(this->numInfo);
+					InfoArvoreEnaria* novaInfo = info;
+
 					(*filho).colocarVetorOrdem(info);
+					noAtual = (noAtual)->getPtrNoFilho(i);
+					noAtual = filho;
 					return 1;
 				}
 			}
