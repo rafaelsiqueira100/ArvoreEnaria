@@ -199,16 +199,16 @@ char NoArvoreEnaria::haInfo(InfoArvoreEnaria* info)const throw() {
 	while (1) {
 		for (int i = 0; i < numInfos; i++) {
 			if (*(noRel->vetPtrInfo + i) != nullptr) {
-				if (**(vetPtrInfo + i) == *info) {
+				if (**(noRel->vetPtrInfo + i) == *info) {
 					return true;
 				}
-				if (**(vetPtrInfo + i) > *info) {
+				if (**(noRel->vetPtrInfo + i) > *info) {
 					//ir pro ponteiro de nó i-1
-					noRel = *(vetPtrNo + i - 1);
+					noRel = *(noRel->vetPtrNo + i - 1);
 
 				}
-				if (**(vetPtrInfo + i) < *info) {
-					noRel = *(vetPtrNo + i + 1);
+				if (**(noRel->vetPtrInfo + i) < *info) {
+					noRel = *(noRel->vetPtrNo + i + 1);
 				}
 
 			}

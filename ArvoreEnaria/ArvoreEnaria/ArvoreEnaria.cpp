@@ -82,18 +82,14 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 }
 
 char ArvoreEnaria::remover(InfoArvoreEnaria* info) throw(char*) {
-	NoArvoreEnaria *atual,*anterior;
-	anterior = this->getRaiz();
-	atual = nullptr;
-	while (1) {
-		if (anterior == nullptr) {
-			//árvore está vazia
-			throw("Tentativa de remoção em árvore vazia!");
-		}
-		this->raiz->removerVetorOrdem(info);
-		if (this->raiz->isVazio())
-			this->raiz == nullptr;
+	
+	if (this->raiz == nullptr) {
+		//árvore está vazia
+		throw("Tentativa de remoção em árvore vazia!");
 	}
+	this->raiz->removerVetorOrdem(info);
+	if (this->raiz->isVazio())
+		this->raiz == nullptr;
 }
 
 NoArvoreEnaria* ArvoreEnaria::getRaiz() const throw(char*) {
