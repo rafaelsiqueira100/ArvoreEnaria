@@ -10,16 +10,16 @@ class MinhaInfo : public InfoArvoreEnaria
 public:
 	MinhaInfo();
 	MinhaInfo(int);
-	MinhaInfo(const InfoArvoreBinariaAVL&) throw();
+	MinhaInfo(const InfoArvoreEnaria&) throw();
 	friend ostream& operator<< (ostream&, const MinhaInfo&) throw();
 	int getValor() const throw();
 	void setValor(int) throw();
-	char operator<(const InfoArvoreBinariaAVL&)const throw() ;
-	char operator>(const InfoArvoreBinariaAVL&)const throw() ;
-	char operator==(const InfoArvoreBinariaAVL&)const throw();
-	char operator<=(const InfoArvoreBinariaAVL&)const throw();
-	char operator>=(const InfoArvoreBinariaAVL&)const throw();
-	void operator=(const InfoArvoreBinariaAVL&)throw();
+	char operator<(const InfoArvoreEnaria&)const throw() ;
+	char operator>(const InfoArvoreEnaria&)const throw() ;
+	char operator==(const InfoArvoreEnaria&)const throw();
+	char operator<=(const InfoArvoreEnaria&)const throw();
+	char operator>=(const InfoArvoreEnaria&)const throw();
+	void operator=(const InfoArvoreEnaria&)throw();
 	ostream& print(ostream&) const throw() ;
 	
 private:

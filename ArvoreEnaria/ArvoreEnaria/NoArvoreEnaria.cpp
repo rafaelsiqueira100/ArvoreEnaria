@@ -47,11 +47,11 @@ int NoArvoreEnaria::getNumInfos()const throw() {
 ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 	int indicePtr = 0;
 	int indiceInfo = 0;
+	int numInfos = no.getNumInfos();
+	for (indicePtr = 0; indicePtr < numInfos ; indicePtr++) {
 
-	for (indicePtr = 0; indicePtr < no.getNumInfos() ; indicePtr++) {
 
-
-		if (no.getPtrNoFilho(indicePtr) != nullptr) {
+		if (no.getPtrNoFilho(indicePtr) != nullptr){// && no.getPtrNoFilho(indicePtr) != (NoArvoreEnaria*)0xFFFFFFFFFFFFFFEF) {
 			os <<'(' << *(no.getPtrNoFilho(indicePtr))<<')';
 		}
 		else { 
