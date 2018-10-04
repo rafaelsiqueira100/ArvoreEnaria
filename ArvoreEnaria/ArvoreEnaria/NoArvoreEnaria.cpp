@@ -1,6 +1,6 @@
 
 #include "NoArvoreEnaria.h"
-
+using namespace std;
 
 NoArvoreEnaria::NoArvoreEnaria(unsigned int numInfos)
 {
@@ -42,12 +42,33 @@ NoArvoreEnaria::~NoArvoreEnaria()
 {
 }
 int NoArvoreEnaria::getNumInfos()const throw() {
-	return this->numInfos;
+	try {
+		if (this != nullptr)
+			return this->numInfos;
+		else
+			return -1;
+	}
+	catch (exception& a) {
+		return -2;
+	}
 }
 ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 	int indicePtr = 0;
 	int indiceInfo = 0;
-	int numInfos = no.getNumInfos();
+	int numInfos = 0;
+	try {
+		numInfos = no.getNumInfos();
+	}
+	catch (exception& a) {
+		os << "**";
+		return os;
+	}
+
+	if (numInfos < 1) {
+		os << "**";
+		return os;
+	}
+	//os << '[';
 	for (indicePtr = 0; indicePtr < numInfos ; indicePtr++) {
 
 

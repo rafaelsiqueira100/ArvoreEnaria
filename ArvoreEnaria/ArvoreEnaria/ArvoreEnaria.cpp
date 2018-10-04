@@ -54,9 +54,10 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 					}
 				
 			}//fim do for
-			if (*(noAtual)->getPtrInfo(i) < *info) {
-				if ((noAtual)->getPtrNoFilho(i) != nullptr) {
-					noAtual = (noAtual->getPtrNoFilho(i));
+			//aqui i=numInfos
+			if (*(noAtual)->getPtrInfo(i-1) < *info) {
+				if ((noAtual)->getPtrNoFilho(i-1) != nullptr) {
+					noAtual = (noAtual->getPtrNoFilho(i-1));
 					//volta pra iteração
 				}
 				else {
