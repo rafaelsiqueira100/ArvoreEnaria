@@ -23,6 +23,12 @@ ostream& operator<< (ostream& os, const ArvoreEnaria& arvore) {
 char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 	char achouLugar = 0;
 	NoArvoreEnaria* noAtual(raiz);
+	if (this->raiz == nullptr)
+		raiz = new NoArvoreEnaria(this->numInfo);
+	if ((this->raiz->isVazio())) {
+		this->raiz == nullptr;
+		raiz = new NoArvoreEnaria(this->numInfo);
+	}
 	while (1) {
 		if (noAtual == nullptr ) {
 			//noAtual é = raiz
@@ -46,9 +52,11 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 						}
 						else {
 							//criar esse nó
-							NoArvoreEnaria* filho = new NoArvoreEnaria(this->numInfo);
-							(*filho).colocarVetorOrdem(info);
-							noAtual->setPtrNoFilho(filho, i);
+							//NoArvoreEnaria* filho = new NoArvoreEnaria(this->numInfo);
+							//(*filho).colocarVetorOrdem(info);
+							NoArvoreEnaria* auxiliar = new NoArvoreEnaria(this->numInfo);
+							(*auxiliar).colocarVetorOrdem(info);
+							noAtual->setPtrNoFilho(auxiliar, i);
 							return 1;
 						}
 					}
@@ -56,20 +64,18 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 			}//fim do for
 			//aqui i=numInfos
 			if (*(noAtual)->getPtrInfo(i-1) < *info) {
-				if ((noAtual)->getPtrNoFilho(i-1) != nullptr) {
-					noAtual = (noAtual->getPtrNoFilho(i-1));
+				//ir para o nó à direita
+				if ((noAtual)->getPtrNoFilho(i) != nullptr) {
+					noAtual = (noAtual->getPtrNoFilho(i));
 					//volta pra iteração
 				}
 				else {
 					//criar esse nó
-					NoArvoreEnaria* filho = noAtual->getPtrNoFilho(i);
-					
-					filho = new NoArvoreEnaria(this->numInfo);
-					InfoArvoreEnaria* novaInfo = info;
+					NoArvoreEnaria* filho = (new NoArvoreEnaria(this->numInfo));
+					//InfoArvoreEnaria* novaInfo = info;
 
 					(*filho).colocarVetorOrdem(info);
-					noAtual = (noAtual)->getPtrNoFilho(i);
-					noAtual = filho;
+					noAtual->setPtrNoFilho(filho, i);
 					return 1;
 				}
 			}

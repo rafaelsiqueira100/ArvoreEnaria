@@ -23,19 +23,27 @@ NoArvoreEnaria::NoArvoreEnaria(const NoArvoreEnaria& noBase)throw(char*)
 		throw("Número de Informações do Objeto Base inválido!");
 	this->numInfos = noBase.numInfos;
 	this->vetPtrInfo = new InfoArvoreEnaria*[numInfos];
+	
 	this->vetPtrNo = new NoArvoreEnaria*[numInfos+1];
 	int i;
 	for (i = 0; i < numInfos; i++) {
+		//this->vetPtrInfo[0] = new NoArvoreEnaria()
 		if (noBase.getPtrInfo(i) != nullptr)
-			(*(this->vetPtrInfo + i)); //new InfoArvoreEnaria();
+			*(this->vetPtrInfo + i) = (noBase.getPtrInfo(i));//se alterar um futuramente, altera o outro
+		else
+			*(this->vetPtrInfo + i) = nullptr;
 			//**(this->vetPtrInfo + i) = *(noBase.getPtrInfo(i));
-		
+
 		if (noBase.getPtrNoFilho(i) != nullptr)
-		**(this->vetPtrNo + i) = *(noBase.getPtrNoFilho(i));
+			*(this->vetPtrNo + i) = new NoArvoreEnaria(*(noBase.getPtrNoFilho(i)));
+		else
+			*(this->vetPtrNo + i) = nullptr;
+
 	}
 	if (noBase.getPtrNoFilho(i) != nullptr)
-	**(this->vetPtrNo + numInfos) = *(noBase.getPtrNoFilho(i));
-
+		*(this->vetPtrNo + numInfos) = new NoArvoreEnaria(*(noBase.getPtrNoFilho(i)));
+	else
+		*(this->vetPtrNo + numInfos) = nullptr;
 }
 
 NoArvoreEnaria::~NoArvoreEnaria()
@@ -86,8 +94,8 @@ ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 			os << "  **  ";
 		}
 	}
-	if (no.getPtrNoFilho(no.getNumInfos()) != nullptr) {
-		os << '(' << *(no.getPtrNoFilho(no.getNumInfos())) << ')';
+	if (no.getPtrNoFilho(numInfos) != nullptr) {
+		os << '(' << *(no.getPtrNoFilho(numInfos)) << ')';
 	}
 	else {
 		os << "(  ||  )";
@@ -102,7 +110,10 @@ NoArvoreEnaria* NoArvoreEnaria::getPtrNoFilho(unsigned int indFilho) const throw
 void NoArvoreEnaria::setPtrNoFilho(NoArvoreEnaria* novoNo,unsigned int indFilho) const throw() {
 	if (novoNo == nullptr)
 		return;
-	 *(vetPtrNo + indFilho) = new NoArvoreEnaria(*novoNo);
+	if (*(this->vetPtrNo + indFilho) == nullptr)
+		*(vetPtrNo + indFilho) = new NoArvoreEnaria(*novoNo);
+	else
+		**(vetPtrNo + indFilho) = *novoNo;
 }
 InfoArvoreEnaria* NoArvoreEnaria::getPtrInfo(unsigned int indInfo) const throw() {
 	return *(vetPtrInfo + indInfo);
