@@ -1,4 +1,4 @@
-
+#include "MinhaInfo.h"
 #include "NoArvoreEnaria.h"
 using namespace std;
 
@@ -68,12 +68,12 @@ ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 		numInfos = no.getNumInfos();
 	}
 	catch (exception& a) {
-		os << "**";
+		os << " ** ";
 		return os;
 	}
 
 	if (numInfos < 1) {
-		os << "**";
+		os << " ** ";
 		return os;
 	}
 	//os << '[';
@@ -81,10 +81,10 @@ ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 
 
 		if (no.getPtrNoFilho(indicePtr) != nullptr){// && no.getPtrNoFilho(indicePtr) != (NoArvoreEnaria*)0xFFFFFFFFFFFFFFEF) {
-			os <<'(' << *(no.getPtrNoFilho(indicePtr))<<')';
+			os <<" [ " << *(no.getPtrNoFilho(indicePtr))<<" ] ";
 		}
 		else { 
-			os << "(  ||  )";
+			os << " (  ||  ) ";
 		}
 		if (no.getPtrInfo(indicePtr) != nullptr) {
 			InfoArvoreEnaria* info = (no.getPtrInfo(indicePtr));
@@ -95,10 +95,10 @@ ostream& operator<< (ostream& os, const NoArvoreEnaria& no) throw() {
 		}
 	}
 	if (no.getPtrNoFilho(numInfos) != nullptr) {
-		os << '(' << *(no.getPtrNoFilho(numInfos)) << ')';
+		os << " [ " << *(no.getPtrNoFilho(numInfos)) << " ] ";
 	}
 	else {
-		os << "(  ||  )";
+		os << " (  ||  ) ";
 	}
 	return os;
 }
@@ -126,14 +126,18 @@ char NoArvoreEnaria::colocarVetorOrdem(InfoArvoreEnaria* info) throw() {
 		if (*(vetPtrInfo + i) != nullptr) {
 			if (**(vetPtrInfo + i) > *info) {
 				//tem que inserir no lugar de i
-				for (int j = numInfos - 1; j >= i; j--) {
-					*(this->vetPtrInfo + j + 1) = *(this->vetPtrInfo + j);
+				for (int j = numInfos - 1; j > i; j--) {
+					if (*(this->vetPtrInfo + j - 1) != nullptr)
+						*(this->vetPtrInfo + j) = (new MinhaInfo(**(this->vetPtrInfo + j - 1)));
+					else
+						*(this->vetPtrInfo + j) = nullptr;
 				}
-				**(this->vetPtrInfo + i) = *info;
+				*(this->vetPtrInfo + i) = new MinhaInfo(*info);
+				return 1;
 			}
 		}
 		else {
-			*(vetPtrInfo + i) = /*new InfoArvoreEnaria(**/info/*)*/;
+			*(vetPtrInfo + i) = /*new MinhaInfo(**/info/*)*/;
 
 			return 1;
 		}
@@ -154,8 +158,22 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 			}
 		}
 	}
-	if (indiceInfo == -1) //não achou essa info nesse nó
-		return -1;
+	if (indiceInfo == -1) { //não achou essa info nesse nó
+	//ela está num nó filho
+		for (int i = 0; i < numInfos; i++) {
+			if (**(this->vetPtrInfo + i) > *info) {
+				//ir pro ponteiro de nó i-1 (esquerda)
+				return (*(vetPtrNo + i))->removerVetorOrdem(info);
+				//goto loop;
+			}
+			if (**(this->vetPtrInfo + i) < *info) {
+				//ir pra direita
+				return (*(vetPtrNo + i+1))->removerVetorOrdem(info);
+				//goto loop;
+			}
+		}
+	}
+		
 	if (!this->isCheio()) {//se não está cheio, é folha
 		*(this->vetPtrInfo + indiceInfo) = nullptr;
 		if (indiceInfo == 0) {//remover a informação 0, o vetor vai ficar vazio
@@ -229,18 +247,23 @@ char NoArvoreEnaria::isVazio() const throw() {
 char NoArvoreEnaria::haInfo(InfoArvoreEnaria* info)const throw() {
 	NoArvoreEnaria* noRel = (NoArvoreEnaria*)(this);
 	while (1) {
-		for (int i = 0; i < numInfos; i++) {
+	loop:for (int i = 0; i < numInfos; i++) {
+			if (noRel == nullptr) {
+				return false;
+			}
 			if (*(noRel->vetPtrInfo + i) != nullptr) {
 				if (**(noRel->vetPtrInfo + i) == *info) {
 					return true;
 				}
 				if (**(noRel->vetPtrInfo + i) > *info) {
-					//ir pro ponteiro de nó i-1
-					noRel = *(noRel->vetPtrNo + i - 1);
-
+					//ir pro ponteiro de nó i-1 (esquerda)
+					noRel = *(noRel->vetPtrNo + i);
+					goto loop;
 				}
 				if (**(noRel->vetPtrInfo + i) < *info) {
+					//ir pra direita
 					noRel = *(noRel->vetPtrNo + i + 1);
+					goto loop;
 				}
 
 			}
@@ -258,9 +281,9 @@ InfoArvoreEnaria* NoArvoreEnaria::acharInfoPorLugar(unsigned int indiceInfoTroca
 	for(;i<noRel->numInfos;i++){
 		if (sentido > -1 && *(noRel->vetPtrNo + indiceInfoTrocar+ i) != nullptr) {
 			//achar o menor valor dessa subárvore direita
-			int indiceInfoFilho = 0;
-			/*while ((*(noRel->vetPtrNo + i))->getPtrInfo(indiceInfoFilho + 1) != nullptr)
-				indiceInfoFilho++;*/
+			int indiceInfoFilho = numInfos;
+			while ((*(noRel->vetPtrNo+ indiceInfoTrocar + i))->getPtrInfo(indiceInfoFilho) != nullptr)
+				indiceInfoFilho--;
 			//indiceInfoFilho representa o índice do menor info do filho encontrado
 			if ((*(noRel->vetPtrNo + indiceInfoTrocar + i))->getPtrNoFilho(indiceInfoFilho) != nullptr) {
 				//esse info tem outros infos antes dele

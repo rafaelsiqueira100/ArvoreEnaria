@@ -5,9 +5,9 @@ MinhaInfo::MinhaInfo() : valor(0) {}
 MinhaInfo::MinhaInfo(int vlr) {
 	this->valor = vlr;
 }
-MinhaInfo::MinhaInfo(const InfoArvoreEnaria& outra) {
-	new MinhaInfo(((const MinhaInfo&)outra).valor);
-}
+MinhaInfo::MinhaInfo(const InfoArvoreEnaria& outra) :
+	 MinhaInfo(((const MinhaInfo&)outra).valor)
+{}
 
 ostream& MinhaInfo::print(ostream& os)const throw()  {
 	return os << this->valor;

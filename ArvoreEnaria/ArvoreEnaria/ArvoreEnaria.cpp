@@ -29,7 +29,7 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 		this->raiz == nullptr;
 		raiz = new NoArvoreEnaria(this->numInfo);
 	}
-	while (1) {
+loop:while (1) {
 		if (noAtual == nullptr ) {
 			//noAtual é = raiz
 			raiz = new NoArvoreEnaria(this->numInfo);
@@ -40,15 +40,17 @@ char ArvoreEnaria::inserir(InfoArvoreEnaria* info) throw(char*){
 			int i;
 			for (i = 0; i < this-> numInfo; i++) {
 				//if ((noAtual)->getPtrInfo(i) != nullptr)  nó está cheio
-				if (*(noAtual)->getPtrInfo(i) == *info) {
-					throw("Informação já está na árvore!");
+				if (*((noAtual)->getPtrInfo(i)) == *info) {
+					//throw("Informação já está na árvore!");
+					return -1;
 				}
-				if (*(noAtual)->getPtrInfo(i) > *info) {
+				if (*((noAtual)->getPtrInfo(i)) > *info) {
 						
 						//deve-se inserir a partir do nó que é apontado pelo ponteiro que está entre i e i-1(ponteiro i)
 						if ((noAtual)->getPtrNoFilho(i) != nullptr) {
 							noAtual = (noAtual->getPtrNoFilho(i));
 							//volta pra iteração
+							goto loop;
 						}
 						else {
 							//criar esse nó
