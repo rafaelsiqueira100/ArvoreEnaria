@@ -308,30 +308,34 @@ InfoArvoreEnaria* NoArvoreEnaria::acharInfoPorLugar(unsigned int indiceInfoTroca
 				//esse info é o desejado para trocar
 				
 				InfoArvoreEnaria* infoTrocarFilho =
-					((*(noRel->vetPtrNo+ indiceInfoTrocar + i))->getPtrInfo(indiceInfoFilho));
+					new MinhaInfo(*((*(noRel->vetPtrNo+ indiceInfoTrocar + i))->getPtrInfo(indiceInfoFilho)));
 				bool haNetoDireitoDireito = false;
 				NoArvoreEnaria* noDireitaFilho = nullptr;
 				InfoArvoreEnaria* infoCompensar = nullptr; 
 				NoArvoreEnaria* ptrCompensar = nullptr;
-				if ((*(noRel->vetPtrNo + indiceInfoTrocar + i))->getPtrNoFilho(indiceInfoTrocar + i + 1) != nullptr) {
-					//se esse info tem outros infos filhos
+				if ((*(noRel->vetPtrNo + indiceInfoTrocar + i))->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1) != nullptr) {
+					//se esse info tem outros infos filhos à direita(nesse caso à esquerda é impossível)
 					noDireitaFilho = new NoArvoreEnaria(*(*(noRel->vetPtrNo + indiceInfoTrocar + i))
-						->getPtrNoFilho(indiceInfoTrocar + i + 1));//83
-					(*(noRel->vetPtrNo + indiceInfoTrocar + i))->setPtrNoFilho(nullptr, indiceInfoTrocar + i + 1);
-					infoCompensar = (*(noRel->vetPtrNo + indiceInfoTrocar + i))
-						->getPtrNoFilho(indiceInfoTrocar + i + 1)->getPtrInfo(0);
-					if (
-						((*(noRel->vetPtrNo + indiceInfoTrocar + i))
-							->getPtrNoFilho(indiceInfoTrocar + i + 1)->getPtrNoFilho(0)) != nullptr)
+						->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1));//83
+					infoCompensar = new MinhaInfo(*(*(noRel->vetPtrNo + indiceInfoTrocar + i))
+						->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1)->getPtrInfo(0));
+					
+					if (((*(noRel->vetPtrNo + indiceInfoTrocar + i))
+							->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1)->getPtrNoFilho(0)) != nullptr)
 						ptrCompensar = new NoArvoreEnaria(*(((*(noRel->vetPtrNo + indiceInfoTrocar + i))
-							->getPtrNoFilho(indiceInfoTrocar + i + 1)->getPtrNoFilho(0))));
+							->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1)->getPtrNoFilho(0))));
+					(*(noRel->vetPtrNo + indiceInfoTrocar + i))->setPtrNoFilho(nullptr, /*indiceInfoTrocar + i*/ +1);
+
 
 				}
 				//infoTrocar Filho será removido da subárvore direita
-				//colocaremos o info menor da subárvore direita direita pra compensar
+				//colocaremos o info menor da subárvore direita direita pra compensar, assim como o ponteiro à esquerda disso
 				
-				(*(noRel->vetPtrNo + indiceInfoTrocar + i))->removerVetorOrdem(infoATrocar);
+				(*(noRel->vetPtrNo + indiceInfoTrocar + i))->removerVetorOrdem(infoTrocarFilho);
 				if (haNetoDireitoDireito) {
+					for (int i = 0; i < numInfos; i++) {
+						(*(noRel->vetPtrNo + indiceInfoTrocar + i))->setPtrNoFilho()
+					}
 					(*(noRel->vetPtrNo + indiceInfoTrocar + i))->colocarVetorOrdem(new MinhaInfo(*infoCompensar));
 					(*(noRel->vetPtrNo + indiceInfoTrocar + i))
 					->getPtrNoFilho(indiceInfoTrocar + i + 1)->removerVetorOrdem(infoCompensar); 
