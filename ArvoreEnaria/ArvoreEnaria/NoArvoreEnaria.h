@@ -28,6 +28,7 @@ private:
 	NoArvoreEnaria ** vetPtrNo;
 	int numInfos;
 	InfoArvoreEnaria* acharInfoPorLugar(unsigned int) throw(char*);
+	char reestruturando;
 };
 
 #endif

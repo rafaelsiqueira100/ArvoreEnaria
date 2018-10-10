@@ -8,7 +8,6 @@ c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvore
 c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(20): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
 c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(59): warning C4101: 'a': variável local não referenciada
 c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(70): warning C4101: 'a': variável local não referenciada
-c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(276): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
-c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(145): warning C4715: 'NoArvoreEnaria::colocarVetorOrdem': nem todos os caminhos de controle retornam um valor
-c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(333): warning C4715: 'NoArvoreEnaria::acharInfoPorLugar': nem todos os caminhos de controle retornam um valor
-  ArvoreEnaria.vcxproj -> C:\Users\u16191\Downloads\ArvoreEnaria-master\ArvoreEnaria\x64\Debug\ArvoreEnaria.exe
+c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(278): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
+c:\users\u16191\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(307): error C2143: erro de sintaxe: ';' ausente antes de '}'
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(361,5): error MSB6006: "CL.exe" foi encerrado com o código 2.
