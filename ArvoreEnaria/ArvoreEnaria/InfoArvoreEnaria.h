@@ -15,7 +15,7 @@ public:
 	virtual char operator==(const InfoArvoreEnaria&)const throw() = 0;
 	virtual char operator<=(const InfoArvoreEnaria&)const throw() = 0;
 	virtual char operator>=(const InfoArvoreEnaria&)const throw() = 0;
-	virtual void operator=(const InfoArvoreEnaria&)throw() = 0;
+	virtual InfoArvoreEnaria& operator=(const InfoArvoreEnaria&)throw() = 0;
 	virtual ostream& print(ostream&)const throw() = 0 ;
 
 };

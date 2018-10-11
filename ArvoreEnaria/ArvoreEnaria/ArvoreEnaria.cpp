@@ -11,6 +11,8 @@ ArvoreEnaria::ArvoreEnaria(unsigned int numInfo)
 
 ArvoreEnaria::~ArvoreEnaria()
 {
+	if (this->raiz != nullptr)
+		delete[] raiz;
 }
 
 

@@ -49,6 +49,23 @@ NoArvoreEnaria::NoArvoreEnaria(const NoArvoreEnaria& noBase)throw(char*)
 
 NoArvoreEnaria::~NoArvoreEnaria()
 {
+	if (this->vetPtrInfo != nullptr) {
+		for (int i = 0; i < this->numInfos; i++) {
+			if (*(this->vetPtrInfo + i) != nullptr) {
+				delete[](*(this->vetPtrInfo + i));
+			}
+		}
+		delete[] this->vetPtrInfo;
+	}
+	if (this->vetPtrNo != nullptr) {
+		for (int i = 0; i <= this->numInfos; i++) {
+			if (*(this->vetPtrNo + i) != nullptr) {
+				delete[](*(this->vetPtrNo + i));
+			}
+		}
+		delete[] this->vetPtrNo;
+	}
+
 }
 int NoArvoreEnaria::getNumInfos()const throw() {
 	try {

@@ -33,6 +33,7 @@ char MinhaInfo::operator<=(const InfoArvoreEnaria& outra)const throw() {
 char MinhaInfo::operator>=(const InfoArvoreEnaria& outra)const throw() {
 	return this->valor >= ((const MinhaInfo&)outra).getValor();
 }
-void MinhaInfo::operator=(const InfoArvoreEnaria& outra)throw() {
+InfoArvoreEnaria& MinhaInfo::operator=(const InfoArvoreEnaria& outra)throw() {
 	valor = (((const MinhaInfo&)outra).valor);
+	return *this;
 }
