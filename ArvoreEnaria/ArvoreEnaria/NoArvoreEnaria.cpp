@@ -302,12 +302,13 @@ char NoArvoreEnaria::haInfo(InfoArvoreEnaria* info)const throw() {
 	}
 }
 InfoArvoreEnaria* NoArvoreEnaria::acharInfoPorLugar(unsigned int indiceInfoTrocar) throw(char*) {
-	InfoArvoreEnaria* infoATrocar = new MinhaInfo(**(this->vetPtrInfo + indiceInfoTrocar));
+	InfoArvoreEnaria* infoATrocar = new MinhaInfo(**(this->vetPtrInfo + indiceInfoTrocar));//info que vc vai trocar
 	this->reestruturando = 1;
 	NoArvoreEnaria* noRel = (NoArvoreEnaria*)this;
 	int i = 0;
 	char sentido = 0;
 	for(;i<noRel->numInfos;i++){
+		
 		if (sentido > -1 && *(noRel->vetPtrNo + indiceInfoTrocar+ i) != nullptr) {
 			//achar o menor valor dessa subárvore direita
 			int indiceInfoFilho = numInfos;
@@ -323,28 +324,31 @@ InfoArvoreEnaria* NoArvoreEnaria::acharInfoPorLugar(unsigned int indiceInfoTroca
 			}
 			else {
 				//esse info é o desejado para trocar
-				
+				//é o menor valor da subárvore direita de noRel
+				//remover primeiro, depois retornar
+
 				InfoArvoreEnaria* infoTrocarFilho =
 					new MinhaInfo(*((*(noRel->vetPtrNo+ indiceInfoTrocar + i))->getPtrInfo(indiceInfoFilho)));
 				bool haNetoDireitoDireito = false;
 				NoArvoreEnaria* noDireitaFilho = nullptr;
 				InfoArvoreEnaria* infoCompensar = nullptr; 
 				NoArvoreEnaria* ptrCompensar = nullptr;
-				if ((*(noRel->vetPtrNo + indiceInfoTrocar + i))->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1) != nullptr) {
+				if ((*(noRel->vetPtrNo + indiceInfoTrocar + i))->getPtrNoFilho(1) != nullptr) {
 					//se esse info tem outros infos filhos à direita(nesse caso à esquerda é impossível)
 					noDireitaFilho = new NoArvoreEnaria(*(*(noRel->vetPtrNo + indiceInfoTrocar + i))
-						->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1));//83
+						->getPtrNoFilho(1));//83
 					infoCompensar = new MinhaInfo(*(*(noRel->vetPtrNo + indiceInfoTrocar + i))
-						->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1)->getPtrInfo(0));
+						->getPtrNoFilho(1)->getPtrInfo(0));
 					
 					if (((*(noRel->vetPtrNo + indiceInfoTrocar + i))
-							->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1)->getPtrNoFilho(0)) != nullptr)
+							->getPtrNoFilho(1)->getPtrNoFilho(0)) != nullptr)
 						ptrCompensar = new NoArvoreEnaria(*(((*(noRel->vetPtrNo + indiceInfoTrocar + i))
-							->getPtrNoFilho(/*indiceInfoTrocar + i +*/ 1)->getPtrNoFilho(0))));
-					(*(noRel->vetPtrNo + indiceInfoTrocar + i))->setPtrNoFilho(nullptr, /*indiceInfoTrocar + i*/ +1);
+							->getPtrNoFilho(1)->getPtrNoFilho(0))));
+					(*(noRel->vetPtrNo + indiceInfoTrocar + i))->setPtrNoFilho(nullptr,1);
 
 
 				}
+
 				//infoTrocar Filho será removido da subárvore direita
 				//colocaremos o info menor da subárvore direita direita pra compensar, assim como o ponteiro à esquerda disso
 				
