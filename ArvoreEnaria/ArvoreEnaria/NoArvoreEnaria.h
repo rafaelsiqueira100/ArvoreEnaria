@@ -21,13 +21,14 @@ public:
 	char removerVetorOrdem(InfoArvoreEnaria* info)throw();
 	char isCheio() const throw();
 	char isVazio() const throw();
+	char isFolha() const throw();
 	char haInfo(InfoArvoreEnaria*) const throw();
 	
 private:
 	InfoArvoreEnaria ** vetPtrInfo;
 	NoArvoreEnaria ** vetPtrNo;
 	int numInfos;
-	InfoArvoreEnaria* acharInfoPorLugar(unsigned int) throw(char*);
+	InfoArvoreEnaria& acharInfoPorLugar(InfoArvoreEnaria&, unsigned int) throw(char*);
 	char reestruturando;
 };
 
