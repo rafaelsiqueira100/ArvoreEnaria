@@ -183,14 +183,18 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 		for (int i = 0; i < numInfos; i++) {
 			if (**(this->vetPtrInfo + i) > *info) {
 				//ir pro ponteiro de nó i-1 (esquerda)
-				return (*(vetPtrNo + i))->removerVetorOrdem(info);
+				char resultado = (*(vetPtrNo + i))->removerVetorOrdem(info);
 				if ((*(vetPtrNo + i))->isVazio())
 					(*(vetPtrNo + i)) = nullptr;
+				return resultado;
 				//goto loop;
 			}
 			if (**(this->vetPtrInfo + i) < *info) {
 				//ir pra direita
-				return (*(vetPtrNo + i+1))->removerVetorOrdem(info);
+				char resultado = (*(vetPtrNo + i + 1))->removerVetorOrdem(info);
+				if ((*(vetPtrNo + i + 1))->isVazio())
+					(*(vetPtrNo + i + 1)) = nullptr;
+				return resultado;
 				//goto loop;
 			}
 		}
@@ -332,9 +336,11 @@ InfoArvoreEnaria& NoArvoreEnaria::acharInfoPorLugar(InfoArvoreEnaria& infoATroca
 	char sentido = 0;
 	int i = 0;
 loop:for (; i < noRel->numInfos; i++) {
-		if (sentido > -1 && *(noRel->vetPtrNo + indiceInfoTrocar - i) != nullptr) {
+maiorEsq:if (sentido > -1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar - i) != nullptr*/) {
 			//achar o maior valor dessa subárvore esquerda
 			int indiceInfoFilho = -1;
+			if ((*(noRel->vetPtrNo + indiceInfoTrocar - i)) == nullptr)
+				goto menorDir;
 			while (indiceInfoFilho < numInfos -1  && (*(noRel->vetPtrNo + indiceInfoTrocar - i))->getPtrInfo(indiceInfoFilho + 1) != nullptr)
 				indiceInfoFilho++;
 			//indiceInfoFilho representa o índice do maior info do filho encontrado
@@ -360,13 +366,18 @@ loop:for (; i < noRel->numInfos; i++) {
 
 			}
 		}
-		if (sentido < 1 && *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nullptr) {
+menorDir:if (sentido < 1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nullptr*/) {
 			//achar o menor valor dessa subárvore direita
 			int indiceInfoFilho = numInfos;
-			while (indiceInfoFilho > 0 && (*(noRel->vetPtrNo + indiceInfoTrocar + i+1))->getPtrInfo(indiceInfoFilho) != nullptr)
-				indiceInfoFilho--;
-			//indiceInfoFilho representa o índice do menor info do filho encontrado
-			if ((*(noRel->vetPtrNo + indiceInfoTrocar + i+1))->getPtrNoFilho(indiceInfoFilho) != nullptr) {
+			if ((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1)) != nullptr)
+				while (indiceInfoFilho > 0 && (*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->getPtrInfo(indiceInfoFilho) != nullptr)
+					indiceInfoFilho--;
+			else {
+				i--;
+				goto loop;
+			}
+				//indiceInfoFilho representa o índice do menor info do filho encontrado
+			if (/*(*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))!= nullptr &&*/(*(noRel->vetPtrNo + indiceInfoTrocar + i+1))->getPtrNoFilho(indiceInfoFilho) != nullptr) {
 				//esse info tem outros infos antes dele
 				sentido = -1;
 
