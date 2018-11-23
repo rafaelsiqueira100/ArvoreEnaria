@@ -99,8 +99,10 @@ char ArvoreEnaria::remover(InfoArvoreEnaria* info) throw(char*) {
 		throw("Tentativa de remoção em árvore vazia!");
 	}
 	this->raiz->removerVetorOrdem(info);
-	if (this->raiz->isVazio())
+	char raizEhVazia = this->raiz->isVazio();
+	if ((int)raizEhVazia==1) {
 		this->raiz == nullptr;
+	}
 }
 
 NoArvoreEnaria* ArvoreEnaria::getRaiz() const throw(char*) {
