@@ -169,7 +169,7 @@ char NoArvoreEnaria::colocarVetorOrdem(InfoArvoreEnaria* info) throw() {
 char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 	if (info == nullptr)
 		return -1;
-	if (!haInfo(info))
+	if (!haInfo(*info))
 		return -1;
 	//ordenar vetor
 	int indiceInfo = -1;
@@ -313,33 +313,34 @@ char NoArvoreEnaria::isVazio() const throw() {
 			return 0;
 	return 1;
 }
-char NoArvoreEnaria::haInfo(InfoArvoreEnaria* info)const throw() {
+char NoArvoreEnaria::haInfo(const InfoArvoreEnaria& info)const throw() {
 	NoArvoreEnaria* noRel = (NoArvoreEnaria*)(this);
 	while (1) {
 	loop:for (int i = 0; i < numInfos; i++) {
-		if (noRel == nullptr) {
-			return false;
-		}
-		if (*(noRel->vetPtrInfo + i) != nullptr) {
-			if (**(noRel->vetPtrInfo + i) == *info) {
-				return true;
+			if (noRel == nullptr) {
+				return false;
 			}
-			if (**(noRel->vetPtrInfo + i) > *info) {
-				//ir pro ponteiro de nó i-1 (esquerda)
-				noRel = *(noRel->vetPtrNo + i);
-				goto loop;
-			}
-			if (**(noRel->vetPtrInfo + i) < *info) {
-				//ir pra direita
-				noRel = *(noRel->vetPtrNo + i + 1);
-				goto loop;
-			}
+			if (*(noRel->vetPtrInfo + i) != nullptr) {
+				if (**(noRel->vetPtrInfo + i) == info) {
+					return true;
+				}
+				if (**(noRel->vetPtrInfo + i) > info) {
+					//ir pro ponteiro de nó i-1 (esquerda)
+					noRel = *(noRel->vetPtrNo + i);
+					goto loop;
+				}
+			
 
+			}
+			else {
+				return false;
+			}
 		}
-		else {
-			return false;
+		if (**(noRel->vetPtrInfo + numInfos -1) < info) {
+			 //ir pra direita
+			 noRel = *(noRel->vetPtrNo + numInfos);
+			 goto loop;
 		}
-	}
 	}
 }
 InfoArvoreEnaria& NoArvoreEnaria::acharInfoPorLugar(InfoArvoreEnaria& infoATrocar, unsigned int indiceInfoTrocar) {

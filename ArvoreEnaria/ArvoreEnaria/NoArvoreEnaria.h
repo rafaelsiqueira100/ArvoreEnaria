@@ -22,7 +22,7 @@ public:
 	char isCheio() const throw();
 	char isVazio() const throw();
 	char isFolha() const throw();
-	char haInfo(InfoArvoreEnaria*) const throw();
+	char haInfo(const InfoArvoreEnaria&) const throw();
 	
 private:
 	InfoArvoreEnaria ** vetPtrInfo;
