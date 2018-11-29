@@ -193,27 +193,28 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 				return resultado;
 				//goto loop;
 			}
-			if (**(this->vetPtrInfo + i) < *info) {
-				//ir pra direita
-				char resultado = (*(vetPtrNo + i + 1))->removerVetorOrdem(info);
-				if ((*(vetPtrNo + i + 1))->isVazio())
-					(*(vetPtrNo + i + 1)) = nullptr;
-				this->conferirNosVazios();
-				return resultado;
-				//goto loop;
-			}
+			
+		}
+		if (**(this->vetPtrInfo + numInfos -1) < *info) {
+			//ir pra direita
+			char resultado = (*(vetPtrNo + numInfos))->removerVetorOrdem(info);
+			if ((*(vetPtrNo + numInfos))->isVazio())
+				(*(vetPtrNo + numInfos)) = nullptr;
+			this->conferirNosVazios();
+			return resultado;
+			//goto loop;
 		}
 	}
 		
 	if (this->isFolha()) {//se é folha
 		*(this->vetPtrInfo + indiceInfo) = nullptr;
-		if (indiceInfo == 0) {//remover a informação 0, o vetor vai ficar vazio
-			
-		}
+		
 		for (int i = indiceInfo + 1; i < this->numInfos; i++) {
 			*(this->vetPtrInfo + i - 1) = *(this->vetPtrInfo + i);
 
 		}//reestruturando o nó
+		*(this->vetPtrInfo + numInfos - 1) = nullptr;
+
 		
 		if (this->isVazio()) {
 			this->vetPtrInfo = nullptr;
@@ -377,9 +378,14 @@ maiorEsq:if (sentido > -1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar - i) != null
 				NoArvoreEnaria* proximoNo = (*(noRel->vetPtrNo + indiceInfoTrocar - i))->getPtrNoFilho(indiceInfoFilho + 1);
 
 				if (proximoNo->isFolha()) {
-
-					InfoArvoreEnaria* infoTrocarFilho =
-						(new MinhaInfo(*((proximoNo)->getPtrInfo(indiceInfoFilho))));
+					InfoArvoreEnaria* infoTrocarFilho = nullptr;
+					while (!infoTrocarFilho) {
+						infoTrocarFilho =
+							((proximoNo)->getPtrInfo(indiceInfoFilho));
+						indiceInfoFilho--;
+					}
+					infoTrocarFilho = new MinhaInfo(*infoTrocarFilho);
+					indiceInfoFilho++;
 					InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
 					(proximoNo)->removerVetorOrdem(((proximoNo)->getPtrInfo(indiceInfoFilho)));
 					if ((proximoNo)->isVazio()) {
@@ -388,6 +394,17 @@ maiorEsq:if (sentido > -1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar - i) != null
 					
 					}
 					if (*(noRel->vetPtrNo + indiceInfoTrocar-i) != nullptr) {
+						//percorrer os filhos disso e ver se algum é vazio
+						NoArvoreEnaria** vetor = (*(noRel->vetPtrNo + indiceInfoTrocar - i))->vetPtrNo;
+						if (vetor){
+							for (int i = 0; i < numInfos +1; i++) {
+								if (*(vetor + i)) {
+									if ((*(vetor + i))->isVazio()) {
+										*(vetor + i) = nullptr;
+									}
+								}
+							}
+						}
 						if ((*(noRel->vetPtrNo + indiceInfoTrocar-i))->isVazio()) {
 							*(noRel->vetPtrNo + indiceInfoTrocar-i) = nullptr;
 						}
@@ -414,17 +431,34 @@ maiorEsq:if (sentido > -1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar - i) != null
 			//é o maior valor da subárvore esquerda de noRel
 			//remover primeiro, depois retornar
 				if(!ehFolha){
-				InfoArvoreEnaria* infoTrocarFilho =
-					(new MinhaInfo(*((*(noRel->vetPtrNo + indiceInfoTrocar - i))->getPtrInfo(indiceInfoFilho))));
-				InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
-				(*(noRel->vetPtrNo + indiceInfoTrocar - i))->removerVetorOrdem(((*(noRel->vetPtrNo + indiceInfoTrocar - i))->getPtrInfo(indiceInfoFilho)));
-				if ((*(noRel->vetPtrNo + indiceInfoTrocar - i))->isVazio())
-					*(noRel->vetPtrNo + indiceInfoTrocar - i) = nullptr;
-				return *retorno;
+				
+					InfoArvoreEnaria* infoTrocarFilho = nullptr;
+					while (!infoTrocarFilho) {
+						infoTrocarFilho =
+							((*(noRel->vetPtrNo + indiceInfoTrocar - i))->getPtrInfo(indiceInfoFilho));
+						indiceInfoFilho--;
+					}
+					infoTrocarFilho = new MinhaInfo(*infoTrocarFilho);
+					indiceInfoFilho++;
+
+					InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
+					(*(noRel->vetPtrNo + indiceInfoTrocar - i))->removerVetorOrdem(((*(noRel->vetPtrNo + indiceInfoTrocar - i))->getPtrInfo(indiceInfoFilho)));
+					if ((*(noRel->vetPtrNo + indiceInfoTrocar - i))->isVazio())
+						*(noRel->vetPtrNo + indiceInfoTrocar - i) = nullptr;
+					return *retorno;
 				}
 				else {
-					InfoArvoreEnaria* infoTrocarFilho =
-						(new MinhaInfo(*(noRel->getPtrInfo(indiceInfoFilho))));
+					InfoArvoreEnaria* infoTrocarFilho = nullptr;
+					while (!infoTrocarFilho) {
+						infoTrocarFilho =
+							(noRel->getPtrInfo(indiceInfoFilho));
+						indiceInfoFilho--;
+					}
+					infoTrocarFilho = new MinhaInfo(*infoTrocarFilho);
+					indiceInfoFilho++;
+
+					/*InfoArvoreEnaria* infoTrocarFilho =
+						(new MinhaInfo(*)));*/
 					InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
 
 					((noRel))->removerVetorOrdem((noRel->getPtrInfo(indiceInfoFilho)));
@@ -461,8 +495,15 @@ menorDir:if (sentido < 1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nul
 
 				if (proximoNo->isFolha()) {
 
-					InfoArvoreEnaria* infoTrocarFilho =
-						(new MinhaInfo(*((proximoNo)->getPtrInfo(indiceInfoFilho))));
+					InfoArvoreEnaria* infoTrocarFilho = nullptr;
+					while (!infoTrocarFilho) {
+						infoTrocarFilho =
+							((proximoNo)->getPtrInfo(indiceInfoFilho));
+						indiceInfoFilho++;
+					}
+
+					infoTrocarFilho = new MinhaInfo(*infoTrocarFilho);
+					indiceInfoFilho--;
 					InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
 
 					(proximoNo)->removerVetorOrdem(((proximoNo)->getPtrInfo(indiceInfoFilho)));
@@ -472,6 +513,18 @@ menorDir:if (sentido < 1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nul
 
 					}
 					if (*(noRel->vetPtrNo + indiceInfoTrocar + i + 1) != nullptr) {
+						//percorrer os filhos disso e ver se algum é vazio
+						NoArvoreEnaria** vetor = (*(noRel->vetPtrNo + indiceInfoTrocar +i+1))->vetPtrNo;
+						if (vetor) {
+							for (int i = 0; i < numInfos + 1; i++) {
+								if (*(vetor + i)) {
+									if ((*(vetor + i))->isVazio()) {
+										*(vetor + i) = nullptr;
+									}
+								}
+							}
+						}
+
 						if ((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->isVazio()) {
 							*(noRel->vetPtrNo + indiceInfoTrocar + i + 1) = nullptr;
 						}
@@ -498,8 +551,19 @@ menorDir:if (sentido < 1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nul
 				//é o menor valor da subárvore direita de noRel
 			//remover primeiro, depois retornar
 				if (!ehFolha) {
-					InfoArvoreEnaria* infoTrocarFilho =
-						(new MinhaInfo(*((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->getPtrInfo(indiceInfoFilho))));
+					/*InfoArvoreEnaria* infoTrocarFilho =
+						(new MinhaInfo();
+					*/
+					InfoArvoreEnaria* infoTrocarFilho = nullptr;
+					while (!infoTrocarFilho) {
+						infoTrocarFilho =
+							(*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->getPtrInfo(indiceInfoFilho);
+						indiceInfoFilho--;
+					}
+
+					infoTrocarFilho = new MinhaInfo(*infoTrocarFilho);
+					indiceInfoFilho++;
+
 					InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
 					(*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->removerVetorOrdem(((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->getPtrInfo(indiceInfoFilho)));
 					if ((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->isVazio())
@@ -508,8 +572,19 @@ menorDir:if (sentido < 1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nul
 					return *retorno;
 				}
 				else {
-					InfoArvoreEnaria* infoTrocarFilho =
-						(new MinhaInfo(*(noRel->getPtrInfo(indiceInfoFilho))));
+					/*InfoArvoreEnaria* infoTrocarFilho =
+						(new MinhaInfo(*));
+					*/
+					InfoArvoreEnaria* infoTrocarFilho = nullptr;
+					while (!infoTrocarFilho) {
+						infoTrocarFilho =
+							(noRel->getPtrInfo(indiceInfoFilho));
+						indiceInfoFilho++;
+					}
+
+					infoTrocarFilho = new MinhaInfo(*infoTrocarFilho);
+					indiceInfoFilho--;
+
 					InfoArvoreEnaria* retorno = new MinhaInfo(*infoTrocarFilho);
 					((noRel))->removerVetorOrdem((noRel->getPtrInfo(indiceInfoFilho)));
 					if (((noRel))->isVazio())
