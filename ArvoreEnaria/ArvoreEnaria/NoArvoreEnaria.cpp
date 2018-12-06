@@ -257,6 +257,12 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 					indiceInserir = this->numInfos - 1;
 				}
 			}
+			for (int i = 0; i < numInfos; i++) {
+				if (i != indiceInfo) {
+					if (*infoSubstit < **(vetPtrInfo + i))
+						indiceInserir = i - 1;
+				}
+			}
 			if (indiceInserir < indiceInfo) {
 				//deslocamento para direita
 				for (int i = indiceInfo; i > indiceInserir; i--) {
@@ -272,14 +278,14 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 			}
 			if (indiceInserir > indiceInfo) {
 				//deslocamento para esquerda
-				for (int i = indiceInfo; i < indiceInfo; i++) {
+				for (int i = indiceInfo; i < indiceInserir; i++) {
 					*(vetPtrInfo + i) = *(vetPtrInfo + i + 1);
 
 					*(vetPtrNo + i) = *(vetPtrNo + i + 1);
 				}
 				*(vetPtrNo + indiceInserir) = *(vetPtrNo + indiceInserir + 1);
 				*(vetPtrInfo + indiceInserir) = infoSubstit;
-
+				
 			}
 			this->conferirNosVazios();
 			return 1;
@@ -306,13 +312,13 @@ char NoArvoreEnaria::isCheio() const throw() {
 			return 0;
 	return 1;
 }
-char NoArvoreEnaria::isVazio() const throw() {
+bool NoArvoreEnaria::isVazio() const throw() {
 	if (vetPtrInfo == nullptr)
-		return 1;
+		return true;
 	for (int i = 0; i < numInfos; i++)
 		if (*(vetPtrInfo + i) != nullptr)
-			return 0;
-	return 1;
+			return false;
+	return true;
 }
 char NoArvoreEnaria::haInfo(const InfoArvoreEnaria& info)const throw() {
 	NoArvoreEnaria* noRel = (NoArvoreEnaria*)(this);

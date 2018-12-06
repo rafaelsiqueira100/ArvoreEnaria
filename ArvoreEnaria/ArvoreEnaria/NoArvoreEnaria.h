@@ -20,7 +20,7 @@ public:
 	char colocarVetorOrdem(InfoArvoreEnaria* info) throw();
 	char removerVetorOrdem(InfoArvoreEnaria* info)throw();
 	char isCheio() const throw();
-	char isVazio() const throw();
+	bool isVazio() const throw();
 	char isFolha() const throw();
 	char haInfo(const InfoArvoreEnaria&) const throw();
 	
