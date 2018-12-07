@@ -94,7 +94,7 @@ loop:while (1) {
 
 char ArvoreEnaria::remover(InfoArvoreEnaria* info) throw(char*) {
 	
-	if (this->raiz == nullptr) {
+	if (!this->raiz || this->raiz == nullptr) {
 		//árvore está vazia
 		throw("Tentativa de remoção em árvore vazia!");
 	}

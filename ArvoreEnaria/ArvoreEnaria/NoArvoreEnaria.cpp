@@ -257,21 +257,34 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 					indiceInserir = this->numInfos - 1;
 				}
 			}
+			int antigoIndice = indiceInserir;
 			for (int i = 0; i < numInfos; i++) {
 				if (i != indiceInfo) {
-					if (*infoSubstit < **(vetPtrInfo + i))
+					if (*infoSubstit < **(vetPtrInfo + i)) {
 						indiceInserir = i - 1;
-				}
-			}
-			if (indiceInserir < indiceInfo) {
-				//deslocamento para direita
-				for (int i = indiceInfo; i > indiceInserir; i--) {
-					*(vetPtrInfo + i) = *(vetPtrInfo + i - 1);
-					*(vetPtrNo + i + 1) = *(vetPtrNo + i);
+						break;
+					}
 
 				}
+			}
+			//bool mudou = antigoIndice != indiceInserir;
+			if (indiceInserir < indiceInfo) {
+				//deslocamento para direita
+
+				for (int i = indiceInfo; i > indiceInserir; i--) {
+					*(vetPtrInfo + i) = *(vetPtrInfo + i - 1);
+					if(*(vetPtrNo+i+1)==nullptr && i!= indiceInfo)
+						*(vetPtrNo + i + 1) = *(vetPtrNo + i);
+
+				}
+			//	if(!mudou)
 				*(vetPtrNo + indiceInserir + 1) = *(vetPtrNo + indiceInserir);
 				*(vetPtrInfo + indiceInserir) = infoSubstit;
+				for (int j = 0; j < numInfos ; j++) {
+					if (*(vetPtrNo + j) == *(vetPtrNo + j + 1))
+						*(vetPtrNo + j) = nullptr;
+				}
+				reoordenarInfos();
 			}
 			if (indiceInserir == indiceInfo) {
 				*(this->vetPtrInfo + indiceInfo) = infoSubstit;
@@ -293,6 +306,41 @@ char NoArvoreEnaria::removerVetorOrdem(InfoArvoreEnaria* info) throw() {
 		
 	}
 
+}
+void NoArvoreEnaria::reoordenarInfos() throw() {
+	InfoArvoreEnaria* atual, * menor;
+	InfoArvoreEnaria** novoVetor =(InfoArvoreEnaria**) new MinhaInfo*[numInfos];
+	if (this->vetPtrNo == nullptr)
+		return;
+	menor = nullptr;
+	int indiceMenor = -1;
+	int posicoesPreenchidas = 0;
+	while (posicoesPreenchidas < numInfos) {
+		for (int j = 0; j < numInfos; j++) {
+			if (*(this->vetPtrInfo + j) != nullptr) {
+				if (menor == nullptr) {
+					menor = *(this->vetPtrInfo + j);
+					indiceMenor = j;
+				}
+				else {
+					if (*menor > **(this->vetPtrInfo + j)) {
+						*(vetPtrInfo + indiceMenor) = menor;
+						menor = new MinhaInfo(**(this->vetPtrInfo + j));
+						indiceMenor = j;
+						*(this->vetPtrInfo + j) = nullptr;
+					}
+				}
+			}
+		}
+		if(menor!=nullptr)
+			*(novoVetor + posicoesPreenchidas) = new MinhaInfo(*menor);
+		menor = nullptr;
+		*(vetPtrInfo + indiceMenor) = nullptr;
+		posicoesPreenchidas++;
+	}
+
+	for (int i = 0; i < numInfos; i++)
+		*(this->vetPtrInfo + i) = *(novoVetor + i);
 }
 char NoArvoreEnaria::isFolha() const throw() {
 	/*if (!this->isCheio())
@@ -349,6 +397,22 @@ char NoArvoreEnaria::haInfo(const InfoArvoreEnaria& info)const throw() {
 			 goto loop;
 		}
 	}
+}
+char NoArvoreEnaria::operator==(const NoArvoreEnaria& outroNo) const throw()
+{
+	if (outroNo.numInfos != this->numInfos)
+		return 0;
+	for (int i = 0; i < numInfos; i++) {
+		if ((this->vetPtrInfo + i) != (outroNo.vetPtrInfo + i))
+			return 0;
+		if ((this->vetPtrNo + i) != (outroNo.vetPtrNo + i))
+			return 0;
+
+	}
+	if ((this->vetPtrNo + numInfos) != (outroNo.vetPtrNo + numInfos))
+		return 0;
+	return 1;
+
 }
 InfoArvoreEnaria& NoArvoreEnaria::acharInfoPorLugar(InfoArvoreEnaria& infoATrocar, unsigned int indiceInfoTrocar) {
 	
@@ -478,10 +542,14 @@ maiorEsq:if (sentido > -1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar - i) != null
 		}
 menorDir:if (sentido < 1 /*&& *(noRel->vetPtrNo + indiceInfoTrocar + i+1) != nullptr*/) {
 			//achar o menor valor dessa subárvore direita
-			int indiceInfoFilho = numInfos;
-			if ((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1)) != nullptr)
+			int indiceInfoFilho = numInfos-1;
+			if ((*(noRel->vetPtrNo + indiceInfoTrocar + i + 1)) != nullptr) {
+
+				while (indiceInfoFilho > 0 && (*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->getPtrInfo(indiceInfoFilho) == nullptr)
+					indiceInfoFilho--;
 				while (indiceInfoFilho > 0 && (*(noRel->vetPtrNo + indiceInfoTrocar + i + 1))->getPtrInfo(indiceInfoFilho) != nullptr)
 					indiceInfoFilho--;
+			}
 			else {
 				if (!ehFolha) {
 					i--;

@@ -23,13 +23,15 @@ public:
 	bool isVazio() const throw();
 	char isFolha() const throw();
 	char haInfo(const InfoArvoreEnaria&) const throw();
-	
+	char operator==(const NoArvoreEnaria&)const throw();
+
 private:
 	InfoArvoreEnaria ** vetPtrInfo;
 	NoArvoreEnaria ** vetPtrNo;
 	int numInfos;
 	InfoArvoreEnaria& acharInfoPorLugar(InfoArvoreEnaria&, unsigned int) throw(char*);
 	NoArvoreEnaria* conferirNosVazios();
+	void reoordenarInfos() throw();
 	char reestruturando;
 };
 

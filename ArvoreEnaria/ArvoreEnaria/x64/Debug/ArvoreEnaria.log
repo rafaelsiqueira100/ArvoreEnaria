@@ -1,16 +1,8 @@
-﻿  NoArvoreEnaria.cpp
+﻿  Main.cpp
 c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.h(12): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
 c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.h(14): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.h(31): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(6): warning C5043: "NoArvoreEnaria::NoArvoreEnaria": a especificação de exceção não corresponde à declaração anterior
-  c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.h(12): note: consulte a declaração de 'NoArvoreEnaria::NoArvoreEnaria'
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(13): warning C4018: '<': incompatibilidade de signed/unsigned
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(21): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(77): warning C4101: 'a': variável local não referenciada
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(88): warning C4101: 'a': variável local não referenciada
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(353): warning C5043: "NoArvoreEnaria::acharInfoPorLugar": a especificação de exceção não corresponde à declaração anterior
-  c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.h(31): note: consulte a declaração de 'NoArvoreEnaria::acharInfoPorLugar'
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(361): warning C4102: 'maiorEsq': rótulo não referenciado
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(168): warning C4715: 'NoArvoreEnaria::colocarVetorOrdem': nem todos os caminhos de controle retornam um valor
-c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.cpp(606): warning C4715: 'NoArvoreEnaria::acharInfoPorLugar': nem todos os caminhos de controle retornam um valor
+c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\noarvoreenaria.h(32): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
+c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\arvoreenaria.h(14): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
+c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\arvoreenaria.h(15): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
+c:\users\rafae\downloads\arvoreenaria-master\arvoreenaria\arvoreenaria\arvoreenaria.h(18): warning C4290: especificação de exceção de C++ ignorada exceto para indicar que a função não é __declspec(nothrow)
   ArvoreEnaria.vcxproj -> C:\Users\rafae\Downloads\ArvoreEnaria-master\ArvoreEnaria\x64\Debug\ArvoreEnaria.exe
